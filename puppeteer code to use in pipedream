@@ -1,0 +1,47 @@
+import { puppeteer } from '@pipedream/browsers';
+
+export default defineComponent({
+  async run({ steps, $ }) {
+    const browser = await puppeteer.browser();
+    const page = await browser.newPage();
+
+  await page.goto(steps.trigger.event.body.url)
+
+    // Login steps...
+
+    // Wait for both email and password inputs to be visible
+    await page.waitForSelector('input#inputEmail', { visible: true });
+    await page.waitForSelector('input#inputPassword', { visible: true });
+
+    // Type the email / username
+    await page.type('input#inputEmail', 'REPLASE WITH YOUE USER / EMAIL');
+
+    // Type the password
+    await page.type('input#inputPassword', 'REPLASE WITH YOUE PASSWORD');
+
+    const result = await page.evaluate(async () => {
+      const form = document.querySelector('.login-form');
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        credentials: 'include',
+        body: data,
+      });
+
+      // Convert the response body to a base64-encoded string
+      const buffer = await response.arrayBuffer();
+      const uint8Array = new Uint8Array(buffer);
+      const base64 = uint8Array.reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      );
+      return btoa(base64);
+    });
+
+    // Close the browser
+    await browser.close();
+
+    // Return the base64 representation of the PDF file
+    return result;
+  },
+});
