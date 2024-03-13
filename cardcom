@@ -1,0 +1,67 @@
+curl --request POST \
+  --url https://secure.cardcom.solutions/Interface/LowProfile.aspx \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data Operation=1 \
+  --data TerminalNumber=94288 \
+  --data UserName=callbox \
+  --data SumToBill=1 \
+  --data CoinId=1 \
+  --data Language=he \
+  --data ProductName= \
+  --data APILevel=10 \
+  --data Codepage=65001 \
+  --data MaxNumOfPayments=6 \
+  --data MinNumOfPayments= \
+  --data HideCreditCardUserId= \
+  --data SuccessRedirectUrl=https://redirect.com \
+  --data ErrorRedirectUrl=https://redirect.com/error \
+  --data IndicatorUrl=https://e8349c75c9b882a9642c168f24a8d4e7.m.pipedream.net \
+  --data HideCVV=false \
+  --data CreditTipe=1 \
+  --data ReturnValue=asdfasdfasdf \
+  --data DefaultNumOfPayments=5 \
+  --data 'CardOwnerName=אייל נסיון' \
+  --data HideCardOwnerName= \
+  --data AutoRedirect= \
+  --data 'Description=תיאור' \
+  --data Url= \
+  --data CreateTokenJValidateType=5 \
+  --data CardOwnerId=053048955 \
+  --data CustomFields.Field1=field1 \
+  --data CustomFields.Field2=field2 \
+  --data ShowInvoiceHead=true
+
+זה מייצר לך קישור כזה - https://secure.cardcom.solutions/External/lowProfileClearing/94288.aspx?LowProfileCode=0dbef86b-c82b-4654-a6d2-05d83953568a
+
+התשובה שלהם מגיעה ככה:
+
+ResponseCode=0&Description=OK&LowProfileCode=0dbef86b-c82b-4654-a6d2-05d83953568a&url=https%3a%2f%2fsecure.cardcom.solutions%2fExternal%2flowProfileClearing%2f94288.aspx%3fLowProfileCode%3d0dbef86b-c82b-4654-a6d2-05d83953568a&PayPalUrl=&BitUrl=
+
+אתה צריך לעשות parse כדי להביא את ה url ואז לעשות decode
+
+
+
+////////////////////////
+
+https://secure.cardcom.solutions/Interface/LowProfile.aspx?codepage=65001&Operation=2&TerminalNumber=124618&UserName=mcarikn&SumToBill=39.90&CoinID=1&Language=he&ProductName=%D7%A7%D7%95%D7%A0%D7%A4%D7%99%D7%93%D7%A0%D7%A1%20-%20%D7%9E%D7%A1%D7%9C%D7%95%D7%9C%20%D7%94%D7%9B%D7%9C%20%D7%9B%D7%9C%D7%95%D7%9C%2C%20%D7%A9%D7%91%D7%95%D7%A2%20%D7%A0%D7%99%D7%A1%D7%99%D7%95%D7%9F%20%D7%91%2039.90%20%D7%A9%22%D7%97%20%D7%95%D7%90%D7%96%205%20%D7%AA%D7%A9%D7%9C%D7%95%D7%9E%D7%99%D7%9D%20%D7%A9%D7%9C%20399%20%D7%A9%22%D7%97&APILevel=10&SuccessRedirectUrl=%20https://www.english21days.co.il/thank-you-pro-planp1nmxg6u&ErrorRedirectUrl=https://secure.cardcom.solutions/SuccessAndFailDealPage/Fail.aspx&IndicatorUrl=https://hook.integromat.com/bxketegx6mbwmx3i33349motz48oa9ml&ReturnValue=7845b2c0-b7e3-496b-8917-5dc00d25a957&&AutoRedirect=true 
+
+ממש תודה!
+
+אני אמור ליצור את זה מתוך זוהו דסק - לא ממש נעים המידע שם. 
+אבל אולי אני יכול להכין איזה טופס שם.
+
+המשתנים הרלוונטיים פה הם:
+codepage: 65001 - מניח שזה קבוע לכל קריאה
+Operation: 2 - מה זה אומר? 
+TerminalNumber: 124618 - אני אחליף בפרטי המסוף של הלקוח
+UserName: mcarikn - - אני אחליף בפרטי המסוף של הלקוח
+SumToBill: 39.90 - ברור
+CoinID: 1 - שקלים?
+Language: he - ברור
+ProductName:  - ברור
+APILevel: 10 - מה זה?
+SuccessRedirectUrl: - ברור
+ErrorRedirectUrl: - ברור
+ IndicatorUrl: - מה זה ?
+ReturnValue: - זה שרשור של מידע שאת שמה בוובהוק כדי להעביר הלאה?
+AutoRedirect: true - ברור
